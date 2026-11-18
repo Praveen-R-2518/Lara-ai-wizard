@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+if [ "$branch" = "main" ] || [ "$branch" = "develop" ]; then
+  echo "ERROR: Direct push to '$branch' is blocked. Switch to your assigned feat/* or docs/* branch first."
+  exit 1
+fi

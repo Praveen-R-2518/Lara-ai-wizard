@@ -1,0 +1,32 @@
+---
+description: Enforce Team Slytherin branch routing and commit hygiene for LARA
+globs: ["**/*"]
+alwaysApply: true
+---
+# LARA Repository - Git Branching & Commit Rules (Team Slytherin)
+
+## 1. Strict Branch Protection Rules
+- NEVER commit or push directly to `main` or `develop`.
+- Before staging, committing, or pushing any changes, ALWAYS check `git branch --show-current` and `git status --porcelain`.
+- If the active branch is `main` or `develop`, STOP and switch to the appropriate feature branch matching the modified files before committing.
+- Always open Pull Requests into `develop` (never directly into `main`).
+
+## 2. File-Path-to-Branch Routing Matrix
+| Modified Path(s) | Target Branch | Owner |
+| :--- | :--- | :--- |
+| `packages/code-analyzer/parser/**` | `feat/analyzer-treesitter-parser` | Member 01 |
+| `packages/code-analyzer/verifier/**` | `feat/analyzer-llm-playwright` | Member 01 |
+| `packages/guidance-backend/agent/nlu/**` | `feat/agent-intent-classifier` | Member 02 |
+| `packages/guidance-backend/agent/engine/**` | `feat/agent-state-machine` | Member 02 |
+| `packages/web-sdk/src/ui/**`, `packages/web-sdk/src/dom/**` | `feat/sdk-lara-overlay` | Member 03 |
+| `packages/web-sdk/src/voice/**` | `feat/sdk-hey-lara-voice` | Member 03 |
+| `packages/guidance-backend/api/**`, `packages/guidance-backend/db/**`, `docker-compose.yml` | `feat/platform-db-pgvector` | Member 04 |
+| `packages/admin-portal/**`, `demos/demo-shop/**` | `feat/admin-portal-demoshop` | Member 04 |
+| `docs/**` | `docs/uml-and-integration-spec` | All Members |
+
+## 3. Automated IDE Git Execution Sequence
+1. Run `git status --porcelain` to inspect modified files and match against Section 2.
+2. Run `git branch --show-current`. If not on the matched branch, run `git checkout <target-branch>`.
+3. Verify no `.env` or secret files are staged.
+4. Run `git add <relevant-paths>` and `git commit -m "<type>(<scope>): <summary>"`.
+5. Run `git push -u origin <target-branch>` and share the PR link targeting `develop`.
