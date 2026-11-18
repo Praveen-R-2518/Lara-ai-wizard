@@ -9,7 +9,7 @@ export const button = (text, symbol, type = 'outline', attrs = '') =>
   `<button class="btn ${type}" type="button" ${attrs}>${icon(symbol)}${text}</button>`;
 export const link = (text, symbol, href, type = 'outline') =>
   `<a class="btn ${type}" href="${esc(href)}">${icon(symbol)}${text}</a>`;
-export const appUrl = (app, tab = 'details') => `#demo/${encodeURIComponent(app)}/${tab}`;
+export const appUrl = (app, tab = 'details') => `#applications/${encodeURIComponent(app)}/${tab}`;
 
 export const tabs = {
   details: ['Details', 'apps'],
@@ -23,14 +23,23 @@ const empty = message => `<p class="empty">${message}</p>`;
 const cardHeader = (name, detail) => `<header class="card-header"><h2>${name}</h2><p>${detail}</p></header>`;
 const table = (columns, rows) => `<div class="table-wrap"><table><thead><tr>${columns.map(title => `<th scope="col">${title}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
 
-export function applicationDirectory(apps) {
-  return `<div class="page-heading"><div><h1>DEMO Application</h1><p>Open a registered application to see its knowledge and guidance.</p></div>
-    ${button('Register application', 'plus', 'primary', 'data-register')}</div>
-    <div class="app-grid">${apps.map((app, index) => `<article class="app-card card">
+function applicationCards(apps, action) {
+  return apps.length ? `<div class="app-grid">${apps.map((app, index) => `<article class="app-card card">
       <div class="app-card-top"><span class="tile ${index % 2 ? 'ice' : ''}">${icon(index % 2 ? 'layers' : 'apps')}</span><span class="app-kind">${app.built_in ? 'Demo host' : 'Registered host'}</span></div>
       <h2>${esc(app.name)}</h2><p>${esc(app.built_in ? (app.id === 'demo-shop' ? 'Sample storefront and checkout tasks.' : 'Sample customer directory and contact management.') : app.url)}</p>
-      <div class="app-card-actions">${link('View application', 'arrow', appUrl(app.id), 'flat')}${link('Open host', 'external', app.url, 'outline')}</div>
-    </article>`).join('')}</div>`;
+      <div class="app-card-actions">${action(app)}</div>
+    </article>`).join('')}</div>` : empty('No applications are registered yet.');
+}
+
+export function applicationDirectory(apps) {
+  return `<div class="page-heading"><div><h1>Applications</h1><p>View the details, knowledge, and guidance for each registered application.</p></div></div>
+    ${applicationCards(apps, app => link('View application', 'arrow', appUrl(app.id), 'flat'))}`;
+}
+
+export function demoLauncher(apps) {
+  return `<div class="page-heading"><div><h1>DEMO Application</h1><p>Start an application or register a new host.</p></div>
+    ${button('Register application', 'plus', 'primary', 'data-register')}</div>
+    ${applicationCards(apps, app => link('Start application', 'play', app.url))}`;
 }
 
 function details({ app, routes, knowledge, workflows, runs }) {
@@ -99,7 +108,7 @@ function activity({ activity }) {
 const panels = { details, knowledge, workflows: workflowPanel, sessions, activity };
 export function applicationWorkspace(info, tab) {
   const { app } = info;
-  return `<a class="back-link" href="#demo">← All applications</a>
+  return `<a class="back-link" href="#applications">← All applications</a>
     <div class="page-heading app-heading"><div class="app-heading-title"><span class="tile">${icon('apps')}</span><div><h1>${esc(app.name)}</h1>
       <p>${esc(app.built_in ? location.origin + app.url : app.url)}</p></div></div><div class="actions">
       ${link('Open host', 'external', app.url)}${link('Chat about this app', 'chat', `#conversations/${encodeURIComponent(app.id)}`, 'primary')}</div></div>

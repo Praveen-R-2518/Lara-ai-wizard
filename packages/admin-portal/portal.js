@@ -1,6 +1,6 @@
 import { icon } from '/sdk/ui/icons.js';
 import { api, escapeHtml as esc, mountChat, mountChatPopup } from '/sdk/ui/chat.js';
-import { appUrl, applicationDirectory, applicationWorkspace, button, link, tabs, workflowTable, label, pill } from './workspace.js';
+import { appUrl, applicationDirectory, applicationWorkspace, demoLauncher, button, link, tabs, workflowTable, label, pill } from './workspace.js';
 
 const root = document.querySelector('#workspace');
 const dialog = document.querySelector('#dialog');
@@ -20,7 +20,10 @@ const navLink = (title, symbol, href, selected) =>
 function getRoute() {
   const [view, second, third] = location.hash.slice(1).split('/');
   if (view === 'conversations') return { view, app: second };
-  if (view === 'demo' || view === 'applications') return { view: 'demo', app: second, tab: Object.hasOwn(tabs, third) ? third : 'details' };
+  if (view === 'applications' || (view === 'demo' && second)) {
+    return { view: 'applications', app: second, tab: Object.hasOwn(tabs, third) ? third : 'details', legacy: view === 'demo' };
+  }
+  if (view === 'demo') return { view };
   return { view: 'overview' };
 }
 
@@ -44,11 +47,11 @@ function overview() {
 }
 
 function shell(path, content) {
-  const name = { overview: 'Overview', conversations: 'Conversations', demo: 'DEMO Application' }[path.view];
+  const name = { overview: 'Overview', conversations: 'Conversations', applications: 'Applications', demo: 'DEMO Application' }[path.view];
   return `<div class="shell"><aside class="sidebar">
     <a class="brand" href="#overview"><span class="brand-icon">${icon('spark')}</span><span>LARA<small>In-app AI assistant</small></span></a>
-    <nav class="nav-primary" aria-label="Workspace">${navLink('Overview', 'home', '#overview', path.view === 'overview')}${navLink('Conversations', 'chat', '#conversations', path.view === 'conversations')}</nav>
-    <div class="sidebar-bottom"><nav aria-label="Applications">${navLink('DEMO Application', 'apps', '#demo', path.view === 'demo')}</nav>
+    <nav class="nav-primary" aria-label="Workspace">${navLink('Overview', 'home', '#overview', path.view === 'overview')}${navLink('Conversations', 'chat', '#conversations', path.view === 'conversations')}${navLink('Applications', 'apps', '#applications', path.view === 'applications')}</nav>
+    <div class="sidebar-bottom"><nav aria-label="Demo launcher">${navLink('DEMO Application', 'play', '#demo', path.view === 'demo')}</nav>
     <div class="account"><span class="avatar">TS</span><span><strong>Team Slytherin</strong><small>Local workspace</small></span></div></div>
     </aside><div class="main-shell"><header class="topbar"><div class="crumb"><span>Workspace</span>${icon('chevron')}<strong>${name}</strong></div>
       <a class="top-chat" href="#conversations">${icon('chat')} <span>AI assistant</span></a>
@@ -68,6 +71,7 @@ function paint(path, content) {
 async function show() {
   const current = ++revision;
   const path = getRoute();
+  if (path.legacy) history.replaceState(null, '', appUrl(path.app, path.tab));
   info = null;
   if (path.view === 'overview') {
     paint(path, overview());
@@ -82,6 +86,10 @@ async function show() {
     } });
     return;
   }
+  if (path.view === 'demo') {
+    paint(path, demoLauncher(applications));
+    return;
+  }
   if (!path.app) {
     paint(path, applicationDirectory(applications));
     return;
@@ -94,7 +102,7 @@ async function show() {
     info = result;
     paint(path, applicationWorkspace(result, path.tab));
   } catch (error) {
-    if (current === revision) paint(path, `<a class="back-link" href="#demo">← All applications</a><p class="empty">${esc(error.message)}</p>`);
+    if (current === revision) paint(path, `<a class="back-link" href="#applications">← All applications</a><p class="empty">${esc(error.message)}</p>`);
   }
 }
 
@@ -199,11 +207,11 @@ dialog.addEventListener('submit', async event => {
       showToast(`Analyzed ${result.routes} screens and ${result.workflows} workflows.`);
       await show();
     } else {
-      const result = await api('/api/applications', Object.fromEntries(new FormData(form)));
+      await api('/api/applications', Object.fromEntries(new FormData(form)));
       dialog.close();
       showToast('Application registered.');
       await loadApps();
-      location.hash = appUrl(result.id);
+      await show();
     }
   } catch (error) { displayError(error); } finally { submit.disabled = false; }
 });
