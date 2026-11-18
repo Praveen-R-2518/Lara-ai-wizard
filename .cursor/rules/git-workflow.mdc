@@ -14,14 +14,14 @@ alwaysApply: true
 ## 2. File-Path-to-Branch Routing Matrix
 | Modified Path(s) | Target Branch | Owner |
 | :--- | :--- | :--- |
-| `packages/code-analyzer/parser/**` | `feat/analyzer-treesitter-parser` | Member 01 |
-| `packages/code-analyzer/verifier/**` | `feat/analyzer-llm-playwright` | Member 01 |
-| `packages/guidance-backend/agent/nlu/**` | `feat/agent-intent-classifier` | Member 02 |
-| `packages/guidance-backend/agent/engine/**` | `feat/agent-state-machine` | Member 02 |
-| `packages/web-sdk/src/ui/**`, `packages/web-sdk/src/dom/**` | `feat/sdk-lara-overlay` | Member 03 |
-| `packages/web-sdk/src/voice/**` | `feat/sdk-hey-lara-voice` | Member 03 |
-| `packages/guidance-backend/api/**`, `packages/guidance-backend/db/**`, `docker-compose.yml` | `feat/platform-db-pgvector` | Member 04 |
-| `packages/admin-portal/**`, `demos/demo-shop/**` | `feat/admin-portal-demoshop` | Member 04 |
+| `packages/code-analyzer/parser/**` | `feat/analyzer-treesitter-parser` | Shaffana |
+| `packages/code-analyzer/verifier/**` | `feat/analyzer-llm-playwright` | Shaffana |
+| `packages/guidance-backend/agent/nlu/**` | `feat/agent-intent-classifier` | Fernando A.R.S.P |
+| `packages/guidance-backend/agent/engine/**` | `feat/agent-state-machine` | Fernando A.R.S.P |
+| `packages/web-sdk/src/ui/**`, `packages/web-sdk/src/dom/**` | `feat/sdk-lara-overlay` | Praveen R. |
+| `packages/web-sdk/src/voice/**` | `feat/sdk-hey-lara-voice` | Praveen R. |
+| `packages/guidance-backend/api/**`, `packages/guidance-backend/db/**`, `docker-compose.yml` | `feat/platform-db-pgvector` | Kirushanth |
+| `packages/admin-portal/**`, `demos/demo-shop/**` | `feat/admin-portal-demoshop` | Kirushanth |
 | `docs/**` | `docs/uml-and-integration-spec` | All Members |
 
 ## 3. Automated IDE Git Execution Sequence
