@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Application | LARA demos</title>
+  <link rel="stylesheet" href="/demo/style.css">
+  <link rel="stylesheet" href="/sdk/ui/wizard.css">
+  <link rel="stylesheet" href="/sdk/ui/chat.css">
+  <script type="module" src="/demo/host.js"></script>
+</head>
+<body data-app="demo-shop">
+  <div class="demo-bar"><a href="/">← LARA workspace</a><div><a href="/demo/" aria-current="page">Demo Application</a><a href="/desk/" >Service Desk</a></div></div>
+  <main class="host" id="host"></main>
+  <div id="host-templates" hidden>
+    <section data-route="home">
+      <header class="host-nav"><a href="#home" class="store-brand">◈ Demo Application</a><nav aria-label="Shop"><a href="#products">Products</a><a href="#orders" data-lara="orders">Track order</a><a href="#signup" data-lara="signup" class="button">Sign up</a></nav></header>
+      <div class="store-hero"><div><p class="eyebrow">Demo storefront</p><h1>Find your everyday favorites.</h1><p>Explore a sample store and see how Lara helps you get things done along the way.</p><a href="#products" data-lara="shop-products" class="button">Browse products →</a></div><div class="store-art" aria-hidden="true"><span>◈</span></div></div>
+      <div class="try"><strong>Try a guided task</strong><p>Open Lara in the lower-right corner and ask “How do I create an account?”</p></div>
+    </section>
+    <section data-route="products">
+      <header class="host-nav"><a href="#home" class="store-brand">◈ Demo Application</a><nav aria-label="Shop"><a href="#products" data-lara="shop-products">Products</a><a href="#orders" data-lara="orders">Track order</a><a href="#signup" data-lara="signup" class="button">Sign up</a></nav></header>
+      <div class="host-body"><h1>Products</h1><p>Explore our demo catalog.</p><div class="product-grid">
+        <article><div class="product-art" aria-hidden="true">♫</div><h2>Studio Headphones</h2><p>$79.00</p><button data-lara="add-headphones" data-success="add-headphones" class="button">Add to cart</button></article>
+        <article><div class="product-art light" aria-hidden="true">◉</div><h2>Mini Speaker</h2><p>$39.00</p><button data-success="add-speaker" class="button">Add to cart</button></article>
+      </div><p class="host-message" role="status"></p></div>
+    </section>
+    <section data-route="signup">
+      <header class="host-nav"><a href="#home" class="store-brand">◈ Demo Application</a><nav aria-label="Shop"><a href="#products" data-lara="shop-products">Products</a><a href="#orders" data-lara="orders">Track order</a><a href="#signup" data-lara="signup" class="button">Sign up</a></nav></header>
+      <div class="host-body narrow"><h1>Create your account</h1><p>Use sample information for this local demo.</p><form data-success="create-account">
+        <label>Full name <input data-lara="full-name" autocomplete="off" name="fullName" minlength="2" required></label>
+        <label>Email address <input data-lara="email" type="email" name="email" autocomplete="off" required></label>
+        <label>Demo password <input data-lara="password" type="password" name="password" autocomplete="new-password" minlength="8" required></label>
+        <button class="button" data-lara="create-account">Create account</button>
+      </form><p class="host-message" role="status"></p></div>
+    </section>
+    <section data-route="orders">
+      <header class="host-nav"><a href="#home" class="store-brand">◈ Demo Application</a><nav aria-label="Shop"><a href="#products" data-lara="shop-products">Products</a><a href="#orders" data-lara="orders">Track order</a><a href="#signup" data-lara="signup" class="button">Sign up</a></nav></header>
+      <div class="host-body narrow"><h1>Track your order</h1><p>Use the sample order number LARA-1001.</p><form data-success="lookup-order">
+        <label>Order number <input data-lara="order-code" name="orderCode" required pattern="LARA-1001" title="Enter LARA-1001"></label>
+        <button class="button" data-lara="lookup-order">Find order</button>
+      </form><p class="host-message" role="status"></p></div>
+    </section>
+  </div>
+  <script id="lara-knowledge" type="application/json">
+{
+  "description": "Demo Application is a sample storefront where you can browse products, add an item to your cart, create a demo account, and look up a sample order.",
+  "answers": [
+    {
+      "question": "What can I do in the demo?",
+      "answer": "You can browse Products, add Studio Headphones or the Mini Speaker to your cart, sign up with sample account details, and use Track order to look up the sample order LARA-1001.",
+      "aliases": [
+        "what can i do here",
+        "tell me about this application",
+        "what does the demo app do"
+      ]
+    },
+    {
+      "question": "What products are available?",
+      "answer": "The demo product catalog lists Studio Headphones for $79.00 and the Mini Speaker for $39.00. Select Products or Browse products to view both.",
+      "aliases": [
+        "show me the products",
+        "which items can i buy",
+        "what items do you sell",
+        "how much are the headphones",
+        "what does the speaker cost"
+      ]
+    },
+    {
+      "question": "How do I track an order?",
+      "answer": "Open Track order, enter the sample order number LARA-1001, then select Find order. The demo reports that this sample order is out for delivery.",
+      "aliases": [
+        "where is my order",
+        "track my order",
+        "track order",
+        "order status",
+        "what order number should i use"
+      ]
+    },
+    {
+      "question": "What is the password requirement?",
+      "answer": "The demo sign-up form requires a password of at least eight characters. Use a sample password for the demo.",
+      "aliases": [
+        "how long should my password be",
+        "minimum password length",
+        "how many characters in a password"
+      ]
+    },
+    {
+      "question": "How do I create an account?",
+      "answer": "Select Sign up in Demo Application. Enter a sample full name, a valid email address, and a demo password of at least eight characters. Then select Create account. The form displays a success message when it accepts the details.",
+      "aliases": ["sign up", "register an account", "make a profile", "new account"]
+    }
+  ]
+}
+  </script>
+  <script id="lara-workflows" type="application/json">
+[
+  {
+    "id": "create-account",
+    "title": "Create an account",
+    "aliases": [
+      "sign up",
+      "register an account",
+      "make a profile",
+      "new account"
+    ],
+    "seed": "published",
+    "steps": [
+      {
+        "route": "home",
+        "target": "signup",
+        "action": "click",
+        "instruction": "Select Sign up in the top navigation."
+      },
+      {
+        "route": "signup",
+        "target": "full-name",
+        "action": "valid",
+        "instruction": "Enter your full name, then press Tab or select the next field."
+      },
+      {
+        "route": "signup",
+        "target": "email",
+        "action": "valid",
+        "instruction": "Enter a valid demo email address, then move to the next field."
+      },
+      {
+        "route": "signup",
+        "target": "password",
+        "action": "valid",
+        "instruction": "Enter at least eight characters for a demo password, then move to the button."
+      },
+      {
+        "route": "signup",
+        "target": "create-account",
+        "action": "success",
+        "instruction": "Select Create account to finish. Lara will wait for the shop to confirm."
+      }
+    ]
+  },
+  {
+    "id": "add-to-cart",
+    "title": "Add an item to cart",
+    "aliases": [
+      "buy a product",
+      "add to cart",
+      "add headphones",
+      "add item"
+    ],
+    "seed": "published",
+    "steps": [
+      {
+        "route": "home",
+        "target": "shop-products",
+        "action": "click",
+        "instruction": "Select Browse products to open the product catalog."
+      },
+      {
+        "route": "products",
+        "target": "add-headphones",
+        "action": "success",
+        "instruction": "Select Add to cart on the Studio Headphones card."
+      }
+    ]
+  },
+  {
+    "id": "track-order",
+    "title": "Track an order",
+    "aliases": [
+      "find order status",
+      "track my package",
+      "where is my order"
+    ],
+    "seed": "review",
+    "steps": [
+      {
+        "route": "home",
+        "target": "orders",
+        "action": "click",
+        "instruction": "Select Track order in the top navigation."
+      },
+      {
+        "route": "orders",
+        "target": "order-code",
+        "action": "valid",
+        "instruction": "Enter the sample order number LARA-1001, then move to the next field."
+      },
+      {
+        "route": "orders",
+        "target": "lookup-order",
+        "action": "success",
+        "instruction": "Select Find order to see the shipment status."
+      }
+    ]
+  }
+]
+  </script>
+</body>
+</html>
