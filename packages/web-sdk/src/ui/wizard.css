@@ -1,0 +1,32 @@
+.lara { --lara-blue:#145cf1; position:fixed; z-index:8; right:clamp(12px,3vw,30px); bottom:clamp(12px,3vw,26px); display:grid; gap:10px; justify-items:end; color:#11254d; }
+.lara * { box-sizing:border-box; }
+.lara button,.lara input { font:inherit; }
+.lara button { cursor:pointer; }
+.lara .icon { width:20px; height:20px; flex:none; }
+.lara p { margin:0; }
+.lara [hidden] { display:none !important; }
+.lara-launcher { display:flex; align-items:center; gap:9px; border:0; border-radius:999px; color:white; background:#145cf1; font-weight:800; min-height:49px; padding:10px 16px; box-shadow:0 9px 30px #1249b653; }
+.lara-launcher:hover,.lara-send:hover { background:#104bc8; }
+.lara-panel { width:min(390px,calc(100vw - 24px)); overflow:hidden; border-radius:16px; border:1px solid #d4e3fa; box-shadow:0 16px 48px #102f6b36; background:#fff; }
+.lara-header { display:flex; align-items:center; gap:9px; background:#145cf1; color:white; padding:11px 12px; }
+.lara-header strong,.lara-header small { display:block; }
+.lara-header small { margin-top:2px;color:#e3eeff;font-size:11px; }
+.lara-logo { display:grid; place-items:center; background:#ffffff26; border-radius:9px; width:33px; height:33px; }
+.lara-header button { margin-left:auto; border:0; background:transparent;color:white; min-height:30px; display:grid; place-items:center; }
+.lara-header button:focus-visible { outline-color:#fff; }
+.lara-body { display:grid; gap:9px; padding:12px; }
+.lara-message { padding:11px; background:#eff5ff; border-radius:10px; color:#23416c; line-height:1.45; }
+.lara-message.guided { border:1px solid #d2e3ff; }
+.lara-progress { display:block; font-size:11px; color:#104abf; margin-bottom:5px; }
+.lara-message .lara-help { color:#603e12; margin-top:7px; }
+.lara-controls { display:flex; gap:5px; flex-wrap:wrap; }
+.lara-controls:empty { display:none; }
+.lara-controls button { padding:6px 9px; border-radius:7px;border:1px solid #d9e6ff;background:white;color:#214b9b;font-weight:700;font-size:11px; display:flex;align-items:center; gap:4px; }
+.lara-controls button:hover { background:#eef4ff; }
+.lara-controls .icon { width:13px;height:13px; }
+.lara-target { outline:3px solid #1562ff !important; outline-offset:4px; box-shadow:0 0 0 7px #76a9ff52; scroll-margin:12px; }
+@media (max-width: 700px) {
+  .lara-guiding .host { padding-bottom: 335px; }
+  .lara-guiding .lara-target { scroll-margin-bottom: 295px; }
+}
+
