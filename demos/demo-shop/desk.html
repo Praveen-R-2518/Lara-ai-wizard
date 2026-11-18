@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Service Desk | LARA demos</title>
+  <link rel="stylesheet" href="/demo/style.css">
+  <link rel="stylesheet" href="/sdk/ui/wizard.css">
+  <link rel="stylesheet" href="/sdk/ui/chat.css">
+  <script type="module" src="/demo/host.js"></script>
+</head>
+<body data-app="demo-desk">
+  <div class="demo-bar"><a href="/">← LARA workspace</a><div><a href="/demo/" >Demo Application</a><a href="/desk/" aria-current="page">Service Desk</a></div></div>
+  <main class="host" id="host"></main>
+  <div id="host-templates" hidden>
+    <section data-route="home">
+      <header class="host-nav"><a href="#home" class="store-brand">◈ Service Desk</a><nav aria-label="Service desk"><a href="#customers" data-lara="customers">Customers</a></nav></header>
+      <div class="store-hero"><div><p class="eyebrow">Demo business app</p><h1>Manage your customer directory.</h1><p>See how the same Lara assistant works in a different host application.</p><a href="#customers" class="button">Open customer directory →</a></div><div class="store-art" aria-hidden="true"><span>◈</span></div></div>
+      <div class="try"><strong>Try a guided task</strong><p>Open Lara and ask “How do I add a new customer?”</p></div>
+    </section>
+    <section data-route="customers">
+      <header class="host-nav"><a href="#home" class="store-brand">◈ Service Desk</a><nav aria-label="Service desk"><a href="#customers" data-lara="customers">Customers</a></nav></header>
+      <div class="host-body"><h1>Customers</h1><p>Browse this demo session’s customer directory.</p><a href="#new-customer" class="button" data-lara="new-customer">New customer →</a><ul class="customers" aria-label="Customer directory"></ul></div>
+    </section>
+    <section data-route="new-customer">
+      <header class="host-nav"><a href="#home" class="store-brand">◈ Service Desk</a><nav aria-label="Service desk"><a href="#customers" data-lara="customers">Customers</a></nav></header>
+      <div class="host-body narrow"><h1>New customer</h1><p>Use sample information for this local demo.</p><form data-success="save-customer">
+        <label>Customer name <input data-lara="customer-name" name="customerName" minlength="2" autocomplete="off" required></label>
+        <label>Customer email <input data-lara="customer-email" name="email" type="email" autocomplete="off" required></label>
+        <button class="button" data-lara="save-customer">Save customer</button>
+      </form><p class="host-message" role="status"></p></div>
+    </section>
+  </div>
+  <script id="lara-knowledge" type="application/json">
+{
+  "description": "Service Desk is a sample customer directory. You can open Customers, add a demo customer, and view the new entry in the directory during the same demo session.",
+  "answers": [
+    {
+      "question": "What can I do in Service Desk?",
+      "answer": "Open Customers to browse the demo directory. Select New customer to add a sample contact, then return to Customers to see the entry during this demo session.",
+      "aliases": [
+        "what can i do here",
+        "what does service desk do",
+        "what features are available"
+      ]
+    },
+    {
+      "question": "Where is the customer directory?",
+      "answer": "Select Customers in the navigation, or Open customer directory from the homepage. This opens the list of customers for the current demo session.",
+      "aliases": [
+        "where can i find customers",
+        "how do i view customers",
+        "see the customer list"
+      ]
+    },
+    {
+      "question": "What customer details are required?",
+      "answer": "New customer requires a customer name and a valid email address. Enter sample details, then select Save customer.",
+      "aliases": [
+        "which fields are required",
+        "what information do i need to add a customer"
+      ]
+    }
+  ]
+}
+  </script>
+  <script id="lara-workflows" type="application/json">
+[
+  {
+    "id": "new-customer",
+    "title": "Create a new customer",
+    "aliases": [
+      "add a new customer",
+      "register a customer",
+      "new contact"
+    ],
+    "seed": "published",
+    "steps": [
+      {
+        "route": "home",
+        "target": "customers",
+        "action": "click",
+        "instruction": "Select Customers to open the directory."
+      },
+      {
+        "route": "customers",
+        "target": "new-customer",
+        "action": "click",
+        "instruction": "Select New customer."
+      },
+      {
+        "route": "new-customer",
+        "target": "customer-name",
+        "action": "valid",
+        "instruction": "Enter the customer's name, then move to the next field."
+      },
+      {
+        "route": "new-customer",
+        "target": "customer-email",
+        "action": "valid",
+        "instruction": "Enter a valid email address, then move to the button."
+      },
+      {
+        "route": "new-customer",
+        "target": "save-customer",
+        "action": "success",
+        "instruction": "Select Save customer to add them to the demo directory."
+      }
+    ]
+  }
+]
+  </script>
+</body>
+</html>
